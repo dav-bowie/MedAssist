@@ -2,6 +2,7 @@ import express from "express";
 import * as Sentry from "@sentry/node";
 import cors from "cors";
 import dotenv from "dotenv";
+import protectedRoutes from './routes/protected';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const app = express();
 app.use(Sentry.Handlers.requestHandler());
 app.use(cors());
 app.use(express.json());
+app.use('/api', protectedRoutes);
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
